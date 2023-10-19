@@ -54,15 +54,14 @@ class Camper(db.Model, SerializerMixin):
     
     @validates("name")
     def check_name(self, key, address):
-        if address == "":
-            return ValueError("Please include name")
-        
+        if address == "" or address == None:
+            raise ValueError("Please include name")
         return address
 
     @validates("age")
     def age_limits(self, key, address):
         if address < 8 or address > 18:
-            return ValueError("Please be between 8 and 18 years of age")
+            raise ValueError("Please be between 8 and 18 years of age")
 
         return address   
     
@@ -90,7 +89,7 @@ class Signup(db.Model, SerializerMixin):
     @validates("time")
     def age_limits(self, key, address):
         if address < 0 or address > 23:
-            return ValueError("Please have a time between 0 and 23 hours")
+            raise ValueError("Please have a time between 0 and 23 hours")
 
         return address   
     
